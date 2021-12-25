@@ -62,7 +62,7 @@ function get_all_res(search_res) {
   return Array.from(ids)
 }
 
-router.get("/search", (ctx) => {
+router.get("/api/search", (ctx) => {
   let req_query = ctx.request.query
   console.log(req_query.keywords)
   ids = get_all_res(document.search(req_query.keywords))
