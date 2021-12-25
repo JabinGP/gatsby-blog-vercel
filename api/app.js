@@ -83,7 +83,8 @@ app.use(router)
 
 console.log(__dirname);
 
-app.use(KoaStatic(statcPath));
+// 添加10分钟缓存，解决每次更新vercel后页面缓存不更新问题
+app.use(KoaStatic(statcPath, { maxage: 10 * 60 * 1000 }));
 // app.listen(3000, () => {
 //     console.log('[demo] request get is starting at port 3000')
 // })
