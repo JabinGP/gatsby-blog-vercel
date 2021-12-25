@@ -1,0 +1,20 @@
+{
+    "name": "test-search",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "gatsby build"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "flexsearch": "^0.7.21",
+        "koa-static": "^5.0.0",
+        "koa2": "^2.0.0-alpha.7",
+        "koa2-router": "^2.0.1",
+        "nodejieba": "^2.5.2"
+    }
+}
