@@ -11,24 +11,23 @@ const path = require('path')
 
 
 // 部署到vecel后，编译后的public文件夹会被上传到容器根目录
-// 
 const statcPath = path.resolve(__dirname, '../public')
-const file = fs.readFileSync(statcPath+"/site.json")
+const file = fs.readFileSync(statcPath + "/site.json")
 
 rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
+  input: process.stdin,
+  output: process.stdout
 });
 
 options = {
-    // encode: str => str.replace(/[\x00-\x7F]/g, "").split("")
-    encode: str => nodejieba.cutForSearch(str.toLowerCase())
+  // encode: str => str.replace(/[\x00-\x7F]/g, "").split("")
+  encode: str => nodejieba.cutForSearch(str.toLowerCase())
 }
 
 // const index = new Index(options);
 const document = new Document({
-    index: ["tag", "title", "text"],
-    encode:options.encode
+  index: ["tag", "title", "text"],
+  encode: options.encode
 });
 // // const worker = new Worker(options);
 
@@ -37,22 +36,48 @@ const document = new Document({
 let jsondata = JSON.parse(file)
 
 jsondata.forEach((val, idx) => {
-    document.add({
-        id:idx,
-        title:val.title,
-        text:val.content
-    })
+  document.add({
+    id: idx,
+    title: val.title,
+    text: val.content
+  })
 })
 // console.log(nodejieba.cutForSearch("多表 Gorm Gorm在我的一个简易demoiris项目实战简易聊天室中使用到， 其中Gorm在另一个简单的demo中尝试使用，Gorm在项目中用到级联查询的时候非常难受，翻看了很多遍官方文档，官方文档在这一块说得不是很清楚，也没有什么示例，最后是自己不断尝试组合实现的。 Xorm 由于还没有使用过Xorm做项目，只是写了简单的单表示例，Xorm似乎也支持级联查询，但我更看重的是Xorm在文档中提供了直接执行SQL的方法，我更倾向于使用原生SQL加传入结构体指针扫描的形式完成级联查询，接下来打算将iris项目实战简易聊天室用xorm重构，看看效果后再对本文进行更新，不过个人感觉xorm应该是会更好用的。"))
 
-
-router.get("/search", (ctx)=>{
-    let req_query = ctx.request.query
-    console.log(req_query.keywords)
-    res = document.search(req_query.keywords)
-    ctx.body = {
-        results: res
+function get_all_res(search_res) {
+  console.log(search_res)
+  ids = new Set()
+  search_res.forEach((v) => {
+    if (!v.result) {
+      return
     }
+    v.result.forEach((id) => {
+      if (ids.has(id)) {
+        return
+      }
+      ids.add(id)
+
+    })
+  })
+  return Array.from(ids)
+}
+
+router.get("/search", (ctx) => {
+  let req_query = ctx.request.query
+  console.log(req_query.keywords)
+  ids = get_all_res(document.search(req_query.keywords))
+  console.log(ids)
+  res = ids.map((idx) => {
+    resData = jsondata[idx]
+    return {
+      "url": resData.slug,
+      "title": resData.title,
+      "excerpt": resData.excerpt,
+    }
+  })
+  ctx.body = {
+    results: res
+  }
 })
 app.use(router)
 
