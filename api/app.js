@@ -12,7 +12,7 @@ const util = require('util')
 const stat = fs.statSync
 
 // 部署到vecel后，编译后的public文件夹会被上传到容器根目录
-const staticPath = path.resolve(__dirname, '../public')
+const staticPath = path.resolve(__dirname, '../public1')
 const file = fs.readFileSync(staticPath + "/site.json")
 
 rl = readline.createInterface({

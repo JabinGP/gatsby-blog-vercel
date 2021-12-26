@@ -5,7 +5,7 @@
   },
   "functions": {
     "api/app.js": {
-      "includeFiles": "./**",
+      "includeFiles": "public1/**",
       "excludeFiles": "node_modules"
     }
   },
