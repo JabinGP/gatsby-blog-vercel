@@ -13,12 +13,9 @@
     {
       "src": "/(.*)",
       "dest": "api/app.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=3600"
-        }
-      ]
+      "headers": {
+        "cache-control": "public, max-age=3600"
+      }
     }
   ]
 }
