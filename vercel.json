@@ -19,7 +19,7 @@
       "dest": "api/app.js"
     },
     {
-      "src": "/:(?<path>*)",
+      "src": "/:(?<path>.*)",
       "dest": "public/$path"
     }
   ]
