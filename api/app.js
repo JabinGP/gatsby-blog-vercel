@@ -87,7 +87,7 @@ console.log(__dirname);
 // get mtime from https://github.com/koajs/send/blob/master/index.js
 // if markdown modified, index.html will changed
 const stats = stat(`${staticPath}/index.html`)
-
+console.log(stats)
 const static = KoaStatic(staticPath, {
   setHeaders: (ctx) => {
     ctx.setHeader("last-modified", stats.mtime.toUTCString())
