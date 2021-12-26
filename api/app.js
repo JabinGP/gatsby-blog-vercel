@@ -93,7 +93,7 @@ const static = KoaStatic(staticPath, {
     ctx.setHeader("last-modified", stats.mtime.toUTCString())
   }
 })
-// app.use(static);
+app.use(static);
 // app.listen(3000, () => {
 //     console.log('[demo] request get is starting at port 3000')
 // })
