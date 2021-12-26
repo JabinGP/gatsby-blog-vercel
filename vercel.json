@@ -9,7 +9,6 @@
       "use": "@vercel/node"
     },
     {
-      "src": "package.json",
       "use": "@vercel/static-build",
       "config": {
         "distDir": "public"
