@@ -1,18 +1,22 @@
 {
-    "name": "test-search",
-    "github": {
-        "silent": true
+  "name": "test-search",
+  "github": {
+    "silent": true
+  },
+  "builds": [
+    {
+      "src": "api/app.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/app.js"
     },
-    "builds": [
-        {
-            "src": "api/app.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "api/app.js"
-        }
-    ]
+    {
+      "src": "/(.*)",
+      "dest": "public"
+    }
+  ]
 }
