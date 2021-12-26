@@ -2,7 +2,7 @@ const { Index, Document, Worker } = require("flexsearch");
 const nodejieba = require("nodejieba");
 const readline = require('readline');
 const Koa = require('koa2');
-const KoaStatic = require("koa-static")
+const KoaStatic = require("koa-static-etag")
 const Router = require('koa2-router')
 const app = new Koa();
 const router = new Router();
@@ -83,8 +83,7 @@ app.use(router)
 
 console.log(__dirname);
 
-// 添加10分钟缓存，解决每次更新vercel后页面缓存不更新问题
-app.use(KoaStatic(statcPath, { maxage: 10 * 60 * 1000 }));
+app.use(KoaStatic({ root: statcPath }));
 // app.listen(3000, () => {
 //     console.log('[demo] request get is starting at port 3000')
 // })
