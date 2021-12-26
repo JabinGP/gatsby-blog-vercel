@@ -83,7 +83,12 @@ app.use(router)
 
 console.log(__dirname);
 
-app.use(KoaStatic(statcPath, { maxAge: 60 * 10 }));
+const static = KoaStatic(statcPath, {
+  setHeaders: (ctx) => {
+    ctx.setHeader("last-modified", "Sun, 26 Dec 2021 10:00:12 GMT")
+  }
+})
+app.use(static);
 // app.listen(3000, () => {
 //     console.log('[demo] request get is starting at port 3000')
 // })
