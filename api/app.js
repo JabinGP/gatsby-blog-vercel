@@ -2,7 +2,7 @@ const { Index, Document, Worker } = require("flexsearch");
 const nodejieba = require("nodejieba");
 const readline = require('readline');
 const Koa = require('koa2');
-const KoaStatic = require("koa-static-etag")
+const KoaStatic = require("koa-static")
 const Router = require('koa2-router')
 const app = new Koa();
 const router = new Router();
@@ -83,7 +83,7 @@ app.use(router)
 
 console.log(__dirname);
 
-app.use(KoaStatic({ root: statcPath }));
+app.use(KoaStatic(statcPath, { maxAge: 60 * 10 }));
 // app.listen(3000, () => {
 //     console.log('[demo] request get is starting at port 3000')
 // })
