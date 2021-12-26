@@ -8,11 +8,12 @@ const app = new Koa();
 const router = new Router();
 const fs = require("fs")
 const path = require('path')
-
+const util = require('util')
+const stat = fs.statSync
 
 // 部署到vecel后，编译后的public文件夹会被上传到容器根目录
-const statcPath = path.resolve(__dirname, '../public')
-const file = fs.readFileSync(statcPath + "/site.json")
+const staticPath = path.resolve(__dirname, '../public')
+const file = fs.readFileSync(staticPath + "/site.json")
 
 rl = readline.createInterface({
   input: process.stdin,
@@ -83,9 +84,13 @@ app.use(router)
 
 console.log(__dirname);
 
-const static = KoaStatic(statcPath, {
+// get mtime from https://github.com/koajs/send/blob/master/index.js
+// if markdown modified, index.html will changed
+const stats = stat(`${staticPath}/index.html`)
+
+const static = KoaStatic(staticPath, {
   setHeaders: (ctx) => {
-    ctx.setHeader("last-modified", "Sun, 26 Dec 2021 10:00:12 GMT")
+    ctx.setHeader("last-modified", stats.mtime.toUTCString())
   }
 })
 app.use(static);
