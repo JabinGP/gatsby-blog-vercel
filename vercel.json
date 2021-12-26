@@ -19,8 +19,8 @@
       "dest": "api/app.js"
     },
     {
-      "src": "/:match*",
-      "dest": "public/:match*"
+      "src": "/:(?<path>*)",
+      "dest": "public/$path"
     }
   ]
 }
