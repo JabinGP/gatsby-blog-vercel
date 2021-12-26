@@ -2,7 +2,7 @@ const { Index, Document, Worker } = require("flexsearch");
 const nodejieba = require("nodejieba");
 const readline = require('readline');
 const Koa = require('koa2');
-const KoaStatic = require("koa-static")
+// const KoaStatic = require("koa-static")
 const Router = require('koa2-router')
 const app = new Koa();
 const router = new Router();
@@ -12,7 +12,7 @@ const util = require('util')
 const stat = fs.statSync
 
 // 部署到vecel后，编译后的public文件夹会被上传到容器根目录
-const staticPath = path.resolve(__dirname, '../public1')
+const staticPath = path.resolve(__dirname, '../public')
 const file = fs.readFileSync(staticPath + "/site.json")
 
 rl = readline.createInterface({
@@ -86,14 +86,14 @@ console.log(__dirname);
 
 // get mtime from https://github.com/koajs/send/blob/master/index.js
 // if markdown modified, index.html will changed
-const stats = stat(`${staticPath}/index.html`)
-console.log(stats)
-const static = KoaStatic(staticPath, {
-  setHeaders: (ctx) => {
-    ctx.setHeader("last-modified", stats.mtime.toUTCString())
-  }
-})
-app.use(static);
+// const stats = stat(`${staticPath}/index.html`)
+// console.log(stats)
+// const static = KoaStatic(staticPath, {
+//   setHeaders: (ctx) => {
+//     ctx.setHeader("last-modified", stats.mtime.toUTCString())
+//   }
+// })
+// app.use(static);
 // app.listen(3000, () => {
 //     console.log('[demo] request get is starting at port 3000')
 // })
