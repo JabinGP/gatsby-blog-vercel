@@ -22,7 +22,7 @@ rl = readline.createInterface({
 
 options = {
   // encode: str => str.replace(/[\x00-\x7F]/g, "").split("")
-  encode: str => nodejieba.cutForSearch(str.toLowerCase())
+  encode: str => nodejieba.cutForSearch(str.toLowerCase(), true)
 }
 
 // const index = new Index(options);
