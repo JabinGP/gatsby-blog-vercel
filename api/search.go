@@ -77,7 +77,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	type Result = map[string]interface{}
-	var res []Result
+	var res = []Result{}
 	for _, hit := range searchResults.Hits {
 		res = append(res, Result{
 			"url":     hit.Fields["Slug"],
