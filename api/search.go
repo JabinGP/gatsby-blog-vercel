@@ -80,12 +80,19 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	var res []Result
 	for _, hit := range searchResults.Hits {
 		res = append(res, Result{
-			"slug":    hit.Fields["Slug"],
+			"url":     hit.Fields["Slug"],
 			"title":   hit.Fields["Title"],
 			"excerpt": hit.Fields["Excerpt"],
 		})
 	}
-	resBts, err := json.Marshal(res)
+	resBts, err := json.Marshal(map[string]interface{}{
+		"results": res,
+	})
+	if err != nil {
+		fmt.Println(err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	fmt.Fprintf(w, string(resBts))
 }
