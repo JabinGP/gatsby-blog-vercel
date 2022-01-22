@@ -5,8 +5,8 @@
   },
   "builds": [
     {
-      "src": "api/app.js",
-      "use": "@vercel/node"
+      "src": "api/search.go",
+      "use": "@vercel/go"
     },
     {
       "src": "./public/**",
@@ -16,7 +16,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "api/app.js"
+      "dest": "api/search.go"
     },
     {
       "src": "/(.*)",
